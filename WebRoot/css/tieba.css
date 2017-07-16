@@ -1,0 +1,21 @@
+@CHARSET "UTF-8";
+.box{
+	margin:20px 100px 50px 100px;
+	
+}
+
+    button{
+        background: #71c6c1;
+        height: 50px;
+        line-height: 50px;
+        color: #fff;
+        text-align: center;
+        width: 100px;
+        margin: 5px;
+        border-radius: 5px;
+        font-size:14px ;
+        font-family: "微软雅黑","Arial Narrow"
+    }
+    a{
+        display: block;
+    }

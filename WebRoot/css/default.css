@@ -1,0 +1,19 @@
+body {
+	font-family: 'Lato', Calibri, Arial, sans-serif;
+}
+button {
+	border: none;
+	padding: 0.6em 1.2em;
+	background: #D9EDF7;
+	font-family: 'Lato', Calibri, Arial, sans-serif;
+	font-size: 1em;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	cursor: pointer;
+	display: inline-block;
+	margin: 3px 2px;
+	border-radius: 2px;
+}
+button:hover {
+	background: #D9EDF7
+}

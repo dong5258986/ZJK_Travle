@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	     xmlns:aop="http://www.springframework.org/schema/aop"
+	     xmlns:tx="http://www.springframework.org/schema/tx"
+	     xmlns:context="http://www.springframework.org/schema/context"
+	     xsi:schemaLocation="
+	     http://www.springframework.org/schema/beans
+	      http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+           http://www.springframework.org/schema/aop
+            http://www.springframework.org/schema/aop/spring-aop-2.0.xsd
+           http://www.springframework.org/schema/tx
+            http://www.springframework.org/schema/tx/spring-tx-2.0.xsd
+            http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+	 <!-- 当前Spring支持注解 -->
+	 <context:annotation-config/>
+	 <!-- 设置当前项目的根包 -->
+	 <context:component-scan base-package="com.zjk"/>
+	 <context:property-placeholder location="classpath:jdbc.properties" />
+	 
+	<!-- 配置数据源 -->
+	<bean id="MySqlDataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${dataSource_1.driverClassName}"></property>
+		<property name="url" value="${dataSource_1.url}">
+		</property>
+		
+		<property name="username" value="${dataSource_1.username}"></property>
+		<property name="password" value="${dataSource_1.password}"></property>
+	</bean>
+	<!-- 配置数据源结束 -->
+	
+	<!-- 配置session工厂 -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource">
+			<ref bean="MySqlDataSource" />
+		</property>
+		
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQLDialect
+				</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+			</props>
+		</property>
+		
+		<property name="packagesToScan">
+			<list>
+				<!-- 用于试验的实体类 -->
+				<value>com.zjk.model</value>
+			</list>
+		</property>
+	</bean>
+	<!-- 事务管理配置  -->
+	
+	<bean id="hibernateTemplate" class="org.springframework.orm.hibernate3.HibernateTemplate">
+		<property name="sessionFactory" >
+		<ref local="sessionFactory"/>
+		</property>
+	</bean>
+	
+	<bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">  
+		<property name="sessionFactory">  
+			<ref local="sessionFactory" />  
+		</property>  
+	</bean>
+	
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="exists" read-only="true" />
+			<tx:method name="*" propagation="REQUIRED" />
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config>
+		<aop:pointcut id="bussinessService"
+			expression="execution(public * com.zjk.service..*.*(..))" />
+		<aop:advisor pointcut-ref="bussinessService" advice-ref="txAdvice" />
+	</aop:config>
+	
+	
+</beans>

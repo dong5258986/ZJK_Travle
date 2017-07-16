@@ -1,0 +1,35 @@
+.demos {
+  text-align: center;
+  margin-top: 20px; 
+  width:1000px;
+  }
+
+.demo-image {
+  cursor: url("images/plus_cursor.png") 100 0, auto;
+
+  width:36.5%;
+  height:250px;
+  background-size: cover;
+            }
+  .demo-image.first {
+    background-image: url("../images/w32.jpg"); }
+  .demo-image.second {
+    background-image: url("../images/1.jpg"); }
+  .demo-image.third {
+    background-image: url("../images/jimingshan.jpg"); }
+  .demo-image.forth {
+    background-image: url("../images/anjiagou.jpg"); }
+  .demo-image.fifth {
+   background-image: url("../images/tianehu.jpg"); }
+  .demo-image.sixth {
+   background-image: url("../images/dajingmen.jpg"); }
+   .demo-image.seventh {
+   background-image: url("../images/nuanquan.jpg"); }
+   .demo-image.eighth {
+   background-image: url("../images/xue.jpg"); }
+ 
+   
+   
+   
+   
+   
